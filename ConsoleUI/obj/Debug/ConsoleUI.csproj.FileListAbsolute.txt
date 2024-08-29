@@ -1,0 +1,11 @@
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\bin\Debug\ConsoleUI.exe.config
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\bin\Debug\ConsoleUI.exe
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\bin\Debug\ConsoleUI.pdb
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\bin\Debug\GarageLogic.dll
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\bin\Debug\GarageLogic.pdb
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\bin\Debug\GarageLogic.dll.config
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\obj\Debug\ConsoleUI.csproj.AssemblyReference.cache
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\obj\Debug\ConsoleUI.csproj.CoreCompileInputs.cache
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\obj\Debug\ConsoleUI.csproj.Up2Date
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\obj\Debug\ConsoleUI.exe
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\ConsoleUI\obj\Debug\ConsoleUI.pdb

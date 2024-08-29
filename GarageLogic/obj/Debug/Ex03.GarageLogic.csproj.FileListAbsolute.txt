@@ -1,0 +1,7 @@
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\obj\Debug\Ex03.GarageLogic.csproj.AssemblyReference.cache
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\obj\Debug\Ex03.GarageLogic.csproj.CoreCompileInputs.cache
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\bin\Debug\GarageLogic.dll.config
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\bin\Debug\GarageLogic.dll
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\bin\Debug\GarageLogic.pdb
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\obj\Debug\GarageLogic.dll
+C:\C# Course\homework 3\B23 Ex03 Dor 208663534 Rom 209082221\GarageLogic\obj\Debug\GarageLogic.pdb
