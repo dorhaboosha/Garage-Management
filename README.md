@@ -1,4 +1,4 @@
-# Garage-Management
+# Garage Management
 The Garage Management System is a console-based application developed in **C#** and **.NET** that simulates the management of a vehicle garage.
 It allows users to manage various types of vehicles, including fuel-based and electric motorcycles, cars, and trucks.
 The system handles tasks such as inserting new vehicles, updating their status, refueling or recharging them, inflating their tires, and displaying detailed information about each vehicle.
