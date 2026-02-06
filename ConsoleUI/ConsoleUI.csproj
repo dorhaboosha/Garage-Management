@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject>ConsoleUI.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>assets\garage.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
@@ -49,6 +52,9 @@
     <Compile Include="InputGetter.cs" />
     <Compile Include="MassageSender.cs" />
     <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\garage.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
