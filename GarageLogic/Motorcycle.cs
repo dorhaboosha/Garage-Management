@@ -34,9 +34,15 @@ namespace GarageLogic
         /// <param name="i_LicenseType">The required license type for the motorcycle.</param>
         /// <param name="i_EngineVolume">The engine volume in cubic centimeters.</param>
         /// <param name="i_CurrentAmountEnergy">The current fuel or battery level.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when engine volume is negative.</exception>
         public void SetMotorcycleProperties(string i_ModelName, string i_WheelManufacturerName, float i_CurrentAirPressure,
             eMotorcycleLicenseType i_LicenseType, int i_EngineVolume, float i_CurrentAmountEnergy)
         {
+            if (i_EngineVolume < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(i_EngineVolume), "Engine volume cannot be negative.");
+            }
+
             SetVehicleProperties(i_ModelName, i_WheelManufacturerName, i_CurrentAirPressure, i_CurrentAmountEnergy);
             m_EngineVolume = i_EngineVolume;
             m_LicenseType = i_LicenseType;

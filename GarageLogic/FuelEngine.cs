@@ -25,11 +25,22 @@ namespace GarageLogic
         }
 
         /// <summary>
-        /// Gets the fuel type this engine uses.
+        /// Gets the fuel type this engine uses as an enum.
+        /// </summary>
+        internal eFuelType FuelTypeEnum
+        {
+            get
+            {
+                return r_FuelType;
+            }
+        }
+
+        /// <summary>
+        /// Gets the fuel type this engine uses as a string (for display).
         /// </summary>
         internal string FuelType
         {
-            get 
+            get
             {
                 return r_FuelType.ToString();
             }

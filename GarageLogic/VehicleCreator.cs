@@ -12,10 +12,10 @@ namespace GarageLogic
     internal static class VehicleCreator
     {
         private const float k_MaxBatteryLifeInElectricCar = 210;
-        private const float k_FuelBasedCarleTank = 45;
+        private const float k_FuelBasedCarTank = 45;
         private const float k_MaxBatteryLifeInElectricMotorcycle = 150;
-        private const float k_FuelBasedMotorcycleTank = (float)5.5;
-        private const float k_FuelBasedTruckleTank = 120;
+        private const float k_FuelBasedMotorcycleTank = 5.5f;
+        private const float k_FuelBasedTruckTank = 120;
 
         /// <summary>
         /// Creates a new vehicle of the specified type with the appropriate engine and wheels.
@@ -45,39 +45,30 @@ namespace GarageLogic
             switch (i_VehicleType)
             {
                 case eVehicleType.ElectricCar:
-                    vehicle = new Car(i_LicenseNumber, engine as ElectricEngine, wheels);
+                    vehicle = new Car(i_LicenseNumber, (ElectricEngine)engine, wheels);
                     break;
-                
+
                 case eVehicleType.RegularCar:
-                    vehicle = new Car(i_LicenseNumber, engine as FuelEngine, wheels);
+                    vehicle = new Car(i_LicenseNumber, (FuelEngine)engine, wheels);
                     break;
 
                 case eVehicleType.ElectricMotorcycle:
-                    vehicle = new Motorcycle(i_LicenseNumber, engine as ElectricEngine, wheels);
+                    vehicle = new Motorcycle(i_LicenseNumber, (ElectricEngine)engine, wheels);
                     break;
 
                 case eVehicleType.RegularMotorcycle:
-                    vehicle = new Motorcycle(i_LicenseNumber, engine as FuelEngine, wheels);
+                    vehicle = new Motorcycle(i_LicenseNumber, (FuelEngine)engine, wheels);
                     break;
 
                 case eVehicleType.Truck:
-                    vehicle = new Truck(i_LicenseNumber, engine as FuelEngine, wheels);
+                    vehicle = new Truck(i_LicenseNumber, (FuelEngine)engine, wheels);
                     break;
 
                 default:
-                    vehicle = null;
-                    break;
+                    throw new ArgumentException($"Unknown vehicle type: {i_VehicleType}");
             }
 
-            if (vehicle == null)
-            {
-                throw new ArgumentException("The system failed to create the vehicle.\n" +
-                    "Please check that the data you enter into the system is correct and try again.");
-            }
-            else
-            {
-                return vehicle;
-            }
+            return vehicle;
         }
 
         /// <summary>
@@ -96,7 +87,7 @@ namespace GarageLogic
                     break;
 
                 case eVehicleType.RegularCar:
-                    vehicleEngine = new FuelEngine(k_FuelBasedCarleTank, eFuelType.Octan95);
+                    vehicleEngine = new FuelEngine(k_FuelBasedCarTank, eFuelType.Octan95);
                     break;
 
                 case eVehicleType.ElectricMotorcycle:
@@ -108,7 +99,7 @@ namespace GarageLogic
                     break;
 
                 case eVehicleType.Truck:
-                    vehicleEngine = new FuelEngine(k_FuelBasedTruckleTank, eFuelType.Soler);
+                    vehicleEngine = new FuelEngine(k_FuelBasedTruckTank, eFuelType.Soler);
                     break;
 
                 default:
@@ -124,6 +115,7 @@ namespace GarageLogic
         /// </summary>
         /// <param name="i_VehicleType">The type of vehicle.</param>
         /// <returns>An array of wheels with the correct count and max pressure for the vehicle type.</returns>
+        /// <exception cref="ArgumentException">Thrown when the vehicle type is unknown.</exception>
         private static Wheel[] createWheels(eVehicleType i_VehicleType)
         {
             Wheel[] wheels;
@@ -142,7 +134,7 @@ namespace GarageLogic
                 }
             }
 
-            else if(vehicleIsMotorcycle)
+            else if (vehicleIsMotorcycle)
             {
                 wheels = new Wheel[(int)eNumberOfWheelsInVehicle.MotorcycleNumberWheels];
 
@@ -151,7 +143,7 @@ namespace GarageLogic
                     wheels[i] = new Wheel((float)eWheelMaxAirPressure.MotorcycleWheel);
                 }
             }
-            else 
+            else if (i_VehicleType == eVehicleType.Truck)
             {
                 wheels = new Wheel[(int)eNumberOfWheelsInVehicle.TruckNumberWheels];
 
@@ -159,6 +151,10 @@ namespace GarageLogic
                 {
                     wheels[i] = new Wheel((float)eWheelMaxAirPressure.TruckWheel);
                 }
+            }
+            else
+            {
+                throw new ArgumentException($"Unknown vehicle type: {i_VehicleType}");
             }
 
             return wheels;

@@ -55,7 +55,7 @@ namespace GarageLogic
         {
             string registeredCar = string.Format("{0}\n{1}", GarageTicketInfo.ToString(), Vehicle.ToString());
 
-            return registeredCar.ToString();
+            return registeredCar;
         }
     }
 }

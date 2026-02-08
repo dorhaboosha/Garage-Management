@@ -76,13 +76,13 @@ namespace ConsoleUI
         }
 
         /// <summary>
-        /// Displays the car color options (Yellow, White, Red, Black).
+        /// Displays the car color options (Yellow, White, Black, Red).
         /// </summary>
         internal static void SendCarColorOptionMessage()
         {
             Console.WriteLine("\nHere is the car's color options (choose 1 option):");
             
-            string[] carColorOptions = new string[4] {"Yellow." , "White.", "Red.", "Black."};
+            string[] carColorOptions = new string[4] {"Yellow." , "White.", "Black.", "Red."};
 
             for (int i = 0; i < carColorOptions.Length; i++)
             {

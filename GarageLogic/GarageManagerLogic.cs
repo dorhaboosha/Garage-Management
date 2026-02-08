@@ -25,18 +25,18 @@ namespace GarageLogic
         /// <summary>
         /// Gets the list of all registered vehicles in the garage.
         /// </summary>
-        /// <exception cref="Exception">Thrown when the garage is empty.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the garage is empty.</exception>
         public List<RegisteredVehicle> VehiclesInGarage
         {
             get
             {
-                if (r_RegisteredVehicles.Count == 0) 
+                if (r_RegisteredVehicles.Count == 0)
                 {
-                    throw new Exception("There is no vehicles in the garage to show.");
+                    throw new InvalidOperationException("There are no vehicles in the garage to show.");
                 }
-                else 
-                { 
-                    return r_RegisteredVehicles; 
+                else
+                {
+                    return r_RegisteredVehicles;
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace GarageLogic
             {
                 if (registeredVehicle.Vehicle.LicenseNumber == i_LicenseNumber)
                 {
-                    vehicleInGarage = !vehicleInGarage;
+                    vehicleInGarage = true;
                     break;
                 }
             }
@@ -95,12 +95,12 @@ namespace GarageLogic
         /// </summary>
         /// <param name="i_VehicleStatus">The status to filter by.</param>
         /// <returns>List of vehicles with the given status.</returns>
-        /// <exception cref="Exception">Thrown when no vehicles exist with the specified status.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when no vehicles exist with the specified status.</exception>
         public List<RegisteredVehicle> GetVehiclesByStatus(eVehicleStatusInGarage i_VehicleStatus)
         {
-            List<RegisteredVehicle> vehiclesInSameStatus = new List<RegisteredVehicle> ();
+            List<RegisteredVehicle> vehiclesInSameStatus = new List<RegisteredVehicle>();
 
-            foreach(RegisteredVehicle registeredVehicle in r_RegisteredVehicles)
+            foreach (RegisteredVehicle registeredVehicle in r_RegisteredVehicles)
             {
                 if (registeredVehicle.GarageTicketInfo.VehicleStatus == i_VehicleStatus)
                 {
@@ -108,9 +108,9 @@ namespace GarageLogic
                 }
             }
 
-            if(vehiclesInSameStatus.Count == 0) 
+            if (vehiclesInSameStatus.Count == 0)
             {
-                throw new Exception("There is no vehicles in the garage in this status.");
+                throw new InvalidOperationException("There are no vehicles in the garage with this status.");
             }
 
             return vehiclesInSameStatus;
@@ -206,7 +206,7 @@ namespace GarageLogic
             
             if (vehicleToRefuel.Engine is FuelEngine fuelEngine)
             {
-                if (fuelEngine.FuelType == i_FuelType.ToString())
+                if (fuelEngine.FuelTypeEnum == i_FuelType)
                 {
                     filingEnergy(vehicleToRefuel, fuelEngine, i_AmountToRefuel);
                 }

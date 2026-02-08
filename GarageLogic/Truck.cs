@@ -20,8 +20,8 @@ namespace GarageLogic
         /// <param name="i_LicenseNumber">The vehicle's license plate number.</param>
         /// <param name="i_Engine">The fuel engine for the truck.</param>
         /// <param name="i_Wheels">The wheels array for the truck.</param>
-        internal Truck(string i_LicenseNumber, Engine i_Engine, Wheel[] i_Wheels)
-        :base(i_LicenseNumber, i_Engine, i_Wheels)
+        internal Truck(string i_LicenseNumber, FuelEngine i_Engine, Wheel[] i_Wheels)
+            : base(i_LicenseNumber, i_Engine, i_Wheels)
         {
         }
 
@@ -70,10 +70,10 @@ namespace GarageLogic
         /// <returns>Formatted truck information.</returns>
         public override string ToString()
         {
-            string TruckInfo = string.Format("Truck Cargo Tank Volume : {0} | Truck Contain Dangerous Materials? : {1}\n{2}",
+            string truckInfo = string.Format("Truck Cargo Tank Volume : {0} | Truck Contain Dangerous Materials? : {1}\n{2}",
                 cargoTankVolume, containDangerousMaterials, base.ToString());
 
-            return TruckInfo;
+            return truckInfo;
         }
     }
 }

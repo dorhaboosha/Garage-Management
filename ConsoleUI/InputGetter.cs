@@ -260,7 +260,7 @@ namespace ConsoleUI
         }
 
         /// <summary>
-        /// Reads and validates the user's car door count selection (2-4 doors).
+        /// Reads and validates the user's car door count selection (2-5 doors).
         /// </summary>
         /// <returns>The selected number of doors.</returns>
         internal static eCarNumberOfDoors GetUserCarNumberDoors()
@@ -269,7 +269,7 @@ namespace ConsoleUI
 
             while (!carNumberDoorsValidation(carNumberDoorsString))
             {
-                Console.WriteLine("What you insert is not valid, please chose valid car number of doors option (number between 2 - 4):");
+                Console.WriteLine("What you insert is not valid, please choose a valid option (number between 1 - 4):");
                 carNumberDoorsString.Clear();
                 carNumberDoorsString.Append(Console.ReadLine());
             }

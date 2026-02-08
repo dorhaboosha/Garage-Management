@@ -39,6 +39,7 @@ namespace GarageLogic
         /// <summary>
         /// Gets or sets the current energy level in the engine.
         /// </summary>
+        /// <exception cref="ValueOutOfRangeException">Thrown when the value is outside the valid range (0 to max capacity).</exception>
         internal float CurrentEngineAmount
         {
             get
@@ -46,8 +47,13 @@ namespace GarageLogic
                 return m_CurrentEngineAmount;
             }
 
-            set 
+            set
             {
+                if (value < 0 || value > r_MaxEngineAmount)
+                {
+                    throw new ValueOutOfRangeException("setting engine energy", 0, r_MaxEngineAmount);
+                }
+
                 m_CurrentEngineAmount = value;
             }
         }

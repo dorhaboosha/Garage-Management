@@ -11,7 +11,7 @@ namespace GarageLogic
     /// </summary>
     public class Wheel
     {
-        private string m_ManufcturerName;
+        private string m_ManufacturerName;
         private float m_CurrentAirPressure;
         private readonly float r_MaxAirPressure;
 
@@ -27,11 +27,11 @@ namespace GarageLogic
         /// <summary>
         /// Sets the manufacturer name and current air pressure.
         /// </summary>
-        /// <param name="i_ManufcturerName">The wheel manufacturer name.</param>
+        /// <param name="i_ManufacturerName">The wheel manufacturer name.</param>
         /// <param name="i_CurrentAirPressure">The current air pressure to set.</param>
-        internal void SetWheelProperties(string i_ManufcturerName, float i_CurrentAirPressure)
+        internal void SetWheelProperties(string i_ManufacturerName, float i_CurrentAirPressure)
         {
-            m_ManufcturerName = i_ManufcturerName;
+            m_ManufacturerName = i_ManufacturerName;
             CurrentAirPressure = i_CurrentAirPressure;
         }
 
@@ -74,11 +74,11 @@ namespace GarageLogic
         /// <summary>
         /// Gets the wheel manufacturer name.
         /// </summary>
-        internal string ManufcturerName
+        internal string ManufacturerName
         {
             get 
             {
-                return m_ManufcturerName;
+                return m_ManufacturerName;
             }
         }
 
@@ -98,7 +98,7 @@ namespace GarageLogic
         {
             string WheelInfo = string.Format("Wheel's information -\n" +
                 "Wheel Manufacturer : {0}   |   Current Air Pressure : {1}   |   Max Air Pressure : {2}",
-               ManufcturerName, CurrentAirPressure, MaxAirPressure);
+               ManufacturerName, CurrentAirPressure, MaxAirPressure);
 
             return WheelInfo;
         }

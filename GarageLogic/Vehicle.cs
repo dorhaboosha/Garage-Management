@@ -25,6 +25,7 @@ namespace GarageLogic
         /// <param name="i_Engine">The engine (fuel or electric) for the vehicle.</param>
         /// <param name="i_Wheels">The wheels array for the vehicle.</param>
         /// <exception cref="FormatException">Thrown when the license number is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when engine or wheels is null or empty.</exception>
         public Vehicle(string i_LicenseNumber, Engine i_Engine, Wheel[] i_Wheels)
         {
             if (string.IsNullOrEmpty(i_LicenseNumber))
@@ -32,7 +33,17 @@ namespace GarageLogic
                 throw new FormatException("The license number can not be empty");
             }
 
-            r_LicenseNumber = i_LicenseNumber; 
+            if (i_Engine == null)
+            {
+                throw new ArgumentNullException(nameof(i_Engine), "Engine cannot be null");
+            }
+
+            if (i_Wheels == null || i_Wheels.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(i_Wheels), "Wheels cannot be null or empty");
+            }
+
+            r_LicenseNumber = i_LicenseNumber;
             r_engine = i_Engine;
             r_wheels = i_Wheels;
         }
@@ -45,7 +56,7 @@ namespace GarageLogic
         /// <param name="i_WheelCurrentAirPressure">The current air pressure in the wheels.</param>
         /// <param name="i_CurrentAmountEnergy">The current fuel or battery level.</param>
         internal void SetVehicleProperties(string i_ModelName, string i_WheelManufacrurerName, 
-            float i_WheelCurrentAirPressure,float i_CurrentAmountEnergy)
+            float i_WheelCurrentAirPressure, float i_CurrentAmountEnergy)
         {
             m_ModelName = i_ModelName;
             setEngineCurrentAmountOfEnergy(i_CurrentAmountEnergy);
@@ -124,7 +135,9 @@ namespace GarageLogic
         /// </summary>
         internal void UpdatingEnergyPrecentage()
         {
-            m_RemainingEnergyPercentage = (r_engine.CurrentEngineAmount / r_engine.MaxEngineAmount) * 100;
+            m_RemainingEnergyPercentage = r_engine.MaxEngineAmount > 0
+                ? (r_engine.CurrentEngineAmount / r_engine.MaxEngineAmount) * 100
+                : 0;
         }
 
         /// <summary>
@@ -145,7 +158,7 @@ namespace GarageLogic
         public override string ToString()
         {
             string vehicleInfo = string.Format("Vehicle's information -\n" +
-                "Model Name : {0} | License Plate Number : {1} | Remaining engery in engine precentage : {2}%\n{3}",
+                "Model Name : {0} | License Plate Number : {1} | Remaining energy in engine percentage : {2}%\n{3}",
                 modelName, LicenseNumber, m_RemainingEnergyPercentage, Engine.ToString());
             
             foreach (Wheel wheel in Wheels) 
