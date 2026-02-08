@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GarageLogic
 {
+    /// <summary>
+    /// Factory for creating vehicles with the appropriate engine and wheels based on vehicle type.
+    /// </summary>
     internal static class VehicleCreator
     {
         private const float k_MaxBatteryLifeInElectricCar = 210;
@@ -14,6 +17,13 @@ namespace GarageLogic
         private const float k_FuelBasedMotorcycleTank = (float)5.5;
         private const float k_FuelBasedTruckleTank = 120;
 
+        /// <summary>
+        /// Creates a new vehicle of the specified type with the appropriate engine and wheels.
+        /// </summary>
+        /// <param name="i_LicenseNumber">The license plate number for the vehicle.</param>
+        /// <param name="i_VehicleType">The type of vehicle to create.</param>
+        /// <returns>A new vehicle instance (Car, Motorcycle, or Truck) ready for property configuration.</returns>
+        /// <exception cref="ArgumentException">Thrown when vehicle creation fails.</exception>
         internal static Vehicle CreateNewVehicle(string i_LicenseNumber, eVehicleType i_VehicleType)
         {
             Vehicle vehicle;
@@ -70,6 +80,11 @@ namespace GarageLogic
             }
         }
 
+        /// <summary>
+        /// Creates the appropriate engine (electric or fuel) for the vehicle type.
+        /// </summary>
+        /// <param name="i_VehicleType">The type of vehicle.</param>
+        /// <returns>An engine configured for the vehicle type, or null for unknown types.</returns>
         private static Engine createEngine(eVehicleType i_VehicleType)
         {
             Engine vehicleEngine;
@@ -104,6 +119,11 @@ namespace GarageLogic
             return vehicleEngine;
         }
 
+        /// <summary>
+        /// Creates the appropriate wheels array for the vehicle type.
+        /// </summary>
+        /// <param name="i_VehicleType">The type of vehicle.</param>
+        /// <returns>An array of wheels with the correct count and max pressure for the vehicle type.</returns>
         private static Wheel[] createWheels(eVehicleType i_VehicleType)
         {
             Wheel[] wheels;
