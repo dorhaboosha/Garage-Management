@@ -1,4 +1,4 @@
-﻿using GarageLogic;
+using GarageLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI
 {
+    /// <summary>
+    /// Console-based user interface for the garage management system.
+    /// Handles user interaction, menu navigation, and delegates operations to the garage logic layer.
+    /// </summary>
     public class GarageManagerUI
     {
         private readonly static GarageManagerLogic sr_GarageManager = new GarageManagerLogic();
 
+        /// <summary>
+        /// Starts the main management loop. Displays the menu and processes user choices until the user exits.
+        /// </summary>
         public void StartManagment()
         {
             bool garageStillWorking = true;
@@ -57,6 +64,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Prompts for a license number and either registers a new vehicle or updates the status of an existing one.
+        /// </summary>
         private static void insertNewVehicle()
         {
             MassageSender.SendInsertVehicleMessage();
@@ -86,6 +96,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Displays vehicle license numbers, optionally filtered by status (all vehicles, in repair, repaired, or paid).
+        /// </summary>
         private static void showLicenses()
         {
             MassageSender.SendDisplayLicenseNumbersMessage();
@@ -130,6 +143,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Changes the status of a vehicle in the garage (e.g., from "In Repair" to "Repaired").
+        /// </summary>
         private static void changeVehicleStatus()
         {
             MassageSender.SendChangeStatusVehicleMessage();
@@ -150,6 +166,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Inflates all wheels of a vehicle to their maximum pressure.
+        /// </summary>
         private static void inflateVehicleWheels()
         {
             MassageSender.SendInflateWheelsMessage();
@@ -168,6 +187,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Refuels a fuel-powered vehicle with the specified amount and fuel type.
+        /// </summary>
         private static void refuelVehicle()
         {
             MassageSender.SendRefulingMessage();
@@ -190,6 +212,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Recharges an electric vehicle's battery for the specified number of minutes.
+        /// </summary>
         private static void rechargeVehicle()
         {
             MassageSender.SendRechargingMessage();
@@ -210,6 +235,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Displays full details of a vehicle in the garage by license number.
+        /// </summary>
         private static void showVehicleInformation()
         {
             MassageSender.SendShowPropertiesMessage();
@@ -229,6 +257,12 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Prompts the user for vehicle details and creates a new vehicle instance.
+        /// Handles different vehicle types (car, motorcycle, truck) with type-specific properties.
+        /// </summary>
+        /// <param name="i_LicenseNumber">The license plate number for the vehicle.</param>
+        /// <returns>A fully configured vehicle ready for registration.</returns>
         private static Vehicle generateVehicle(string i_LicenseNumber)
         {
             MassageSender.SendNewVehicleInserationMessage();
@@ -298,6 +332,10 @@ namespace ConsoleUI
             return userVehicleInseration;
         }
 
+        /// <summary>
+        /// Prompts for owner information and creates a garage ticket for the vehicle.
+        /// </summary>
+        /// <returns>A garage ticket with owner name and phone number.</returns>
         private static GarageTicket generateGarageTicket()
         {
             MassageSender.SendOwnerVehicleInfoMessage();
