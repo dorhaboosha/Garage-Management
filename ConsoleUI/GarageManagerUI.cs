@@ -91,18 +91,15 @@ namespace ConsoleUI
 
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (InvalidOperationException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (ValueOutOfRangeException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
@@ -142,9 +139,17 @@ namespace ConsoleUI
             }
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
+        }
+
+        /// <summary>
+        /// Displays the exception message and returns the user to the main menu.
+        /// </summary>
+        private static void handleOperationError(Exception i_Exception)
+        {
+            Console.WriteLine(string.Format("\n{0}", i_Exception.Message));
+            Console.WriteLine("We move you now to the main menu.\n");
         }
 
         /// <summary>
@@ -178,13 +183,11 @@ namespace ConsoleUI
 
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (InvalidOperationException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
@@ -204,18 +207,15 @@ namespace ConsoleUI
 
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (InvalidOperationException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (ValueOutOfRangeException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
@@ -272,18 +272,15 @@ namespace ConsoleUI
 
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (InvalidOperationException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (ValueOutOfRangeException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
@@ -304,13 +301,11 @@ namespace ConsoleUI
 
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (InvalidOperationException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
