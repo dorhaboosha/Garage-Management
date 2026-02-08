@@ -1,4 +1,4 @@
-﻿using GarageLogic;
+using GarageLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI
 {
+    /// <summary>
+    /// Console-based user interface for the garage management system.
+    /// Handles user interaction, menu navigation, and delegates operations to the garage logic layer.
+    /// </summary>
     public class GarageManagerUI
     {
         private readonly static GarageManagerLogic sr_GarageManager = new GarageManagerLogic();
 
+        /// <summary>
+        /// Starts the main management loop. Displays the menu and processes user choices until the user exits.
+        /// </summary>
         public void StartManagment()
         {
             bool garageStillWorking = true;
@@ -57,6 +64,9 @@ namespace ConsoleUI
             }
         }
 
+        /// <summary>
+        /// Prompts for a license number and either registers a new vehicle or updates the status of an existing one.
+        /// </summary>
         private static void insertNewVehicle()
         {
             MassageSender.SendInsertVehicleMessage();
@@ -79,13 +89,23 @@ namespace ConsoleUI
                 }
             }
 
-            catch (Exception exception) 
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
+            }
+            catch (InvalidOperationException exception)
+            {
+                handleOperationError(exception);
+            }
+            catch (ValueOutOfRangeException exception)
+            {
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Displays vehicle license numbers, optionally filtered by status (all vehicles, in repair, repaired, or paid).
+        /// </summary>
         private static void showLicenses()
         {
             MassageSender.SendDisplayLicenseNumbersMessage();
@@ -93,43 +113,61 @@ namespace ConsoleUI
 
             try
             {
+                IEnumerable<RegisteredVehicle> vehicles;
                 if (userChoice == 0)
                 {
-                    List<RegisteredVehicle> vehiclesinGarage = sr_GarageManager.VehiclesInGarage;
-                    int numberOfVehicle = 1;
-                    Console.WriteLine();
-                    
-                    foreach (RegisteredVehicle registeredVehicle in vehiclesinGarage)
-                    {
-                        Console.WriteLine("{0}. {1}", numberOfVehicle, registeredVehicle.Vehicle.LicenseNumber);
-                        numberOfVehicle++;
-                    }
-
-                    Console.WriteLine();
+                    vehicles = sr_GarageManager.VehiclesInGarage;
                 }
                 else
                 {
                     eVehicleStatusInGarage statusFilter = (eVehicleStatusInGarage)userChoice;
-                    List<RegisteredVehicle> vehiclesinGarageByStatus = sr_GarageManager.GetVehiclesByStatus(statusFilter);
-                    int numberOfVehicle = 1;
-                    Console.WriteLine();
-
-                    foreach (RegisteredVehicle registeredVehicle in vehiclesinGarageByStatus)
-                    {
-                        Console.WriteLine("{0}. {1}", numberOfVehicle, registeredVehicle.Vehicle.LicenseNumber);
-                        numberOfVehicle++;
-                    }
-
-                    Console.WriteLine();
+                    vehicles = sr_GarageManager.GetVehiclesByStatus(statusFilter);
                 }
+
+                Console.WriteLine();
+                if (!vehicles.Any())
+                {
+                    Console.WriteLine(userChoice == 0
+                        ? "There are no vehicles in the garage to show."
+                        : "There are no vehicles in the garage with this status.");
+                }
+                else
+                {
+                    displayLicenseNumbers(vehicles);
+                }
+                Console.WriteLine();
             }
-            catch (Exception exception) 
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Displays the exception message and returns the user to the main menu.
+        /// </summary>
+        private static void handleOperationError(Exception i_Exception)
+        {
+            Console.WriteLine(string.Format("\n{0}", i_Exception.Message));
+            Console.WriteLine("We move you now to the main menu.\n");
+        }
+
+        /// <summary>
+        /// Displays license numbers for a collection of registered vehicles.
+        /// </summary>
+        private static void displayLicenseNumbers(IEnumerable<RegisteredVehicle> vehicles)
+        {
+            int numberOfVehicle = 1;
+            foreach (RegisteredVehicle registeredVehicle in vehicles)
+            {
+                Console.WriteLine("{0}. {1}", numberOfVehicle, registeredVehicle.Vehicle.LicenseNumber);
+                numberOfVehicle++;
+            }
+        }
+
+        /// <summary>
+        /// Changes the status of a vehicle in the garage (e.g., from "In Repair" to "Repaired").
+        /// </summary>
         private static void changeVehicleStatus()
         {
             MassageSender.SendChangeStatusVehicleMessage();
@@ -143,13 +181,19 @@ namespace ConsoleUI
                 MassageSender.SendSuccessChangeVehicleStatusMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
+            }
+            catch (InvalidOperationException exception)
+            {
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Inflates all wheels of a vehicle to their maximum pressure.
+        /// </summary>
         private static void inflateVehicleWheels()
         {
             MassageSender.SendInflateWheelsMessage();
@@ -161,13 +205,23 @@ namespace ConsoleUI
                 MassageSender.SendSuccessInflateVehicleWheelsMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
+            }
+            catch (InvalidOperationException exception)
+            {
+                handleOperationError(exception);
+            }
+            catch (ValueOutOfRangeException exception)
+            {
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Refuels a fuel-powered vehicle with the specified amount and fuel type.
+        /// </summary>
         private static void refuelVehicle()
         {
             MassageSender.SendRefulingMessage();
@@ -183,13 +237,23 @@ namespace ConsoleUI
                 MassageSender.SendSuccessRefuelingVehicleMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
+            }
+            catch (InvalidOperationException exception)
+            {
+                handleOperationError(exception);
+            }
+            catch (ValueOutOfRangeException exception)
+            {
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Recharges an electric vehicle's battery for the specified number of minutes.
+        /// </summary>
         private static void rechargeVehicle()
         {
             MassageSender.SendRechargingMessage();
@@ -203,13 +267,23 @@ namespace ConsoleUI
                 MassageSender.SendSuccessRechargingVehicleMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
+            }
+            catch (InvalidOperationException exception)
+            {
+                handleOperationError(exception);
+            }
+            catch (ValueOutOfRangeException exception)
+            {
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Displays full details of a vehicle in the garage by license number.
+        /// </summary>
         private static void showVehicleInformation()
         {
             MassageSender.SendShowPropertiesMessage();
@@ -222,13 +296,22 @@ namespace ConsoleUI
                 Console.WriteLine(printProperties);
             }
 
-            catch (Exception exception) 
+            catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
+            }
+            catch (InvalidOperationException exception)
+            {
+                handleOperationError(exception);
             }
         }
 
+        /// <summary>
+        /// Prompts the user for vehicle details and creates a new vehicle instance.
+        /// Handles different vehicle types (car, motorcycle, truck) with type-specific properties.
+        /// </summary>
+        /// <param name="i_LicenseNumber">The license plate number for the vehicle.</param>
+        /// <returns>A fully configured vehicle ready for registration.</returns>
         private static Vehicle generateVehicle(string i_LicenseNumber)
         {
             MassageSender.SendNewVehicleInserationMessage();
@@ -241,21 +324,14 @@ namespace ConsoleUI
             Console.WriteLine("\nPlease write the wheel manufacturer name of the vehicle:");
             string vehicleWheelManufacturerName = InputGetter.GetStringPropertyFromUser();
             
-            Console.WriteLine("\nPlease write the air prussure in the wheels of the vehicle:");
+            Console.WriteLine("\nPlease write the air pressure in the wheels of the vehicle:");
             float vehicleWheelAirPressure = InputGetter.GetFloatPropertyFromUser();
 
-            float vehicleCurrentEnergy;
-
-            if (userVehicleInseration.Engine is FuelEngine)
-            {
-                Console.WriteLine("\nPlease write the current amount of fuel in vehicle:");
-                vehicleCurrentEnergy = InputGetter.GetFloatPropertyFromUser();
-            }
-            else 
-            {
-                Console.WriteLine("\nPlease write the current amount of battery in vehicle:");
-                vehicleCurrentEnergy = InputGetter.GetFloatPropertyFromUser();
-            }
+            string energyPrompt = userVehicleInseration.Engine is FuelEngine
+                ? "\nPlease write the current amount of fuel in vehicle:"
+                : "\nPlease write the current amount of battery in vehicle:";
+            Console.WriteLine(energyPrompt);
+            float vehicleCurrentEnergy = InputGetter.GetFloatPropertyFromUser();
 
             if (userVehicleInseration is Car userCar)
             {
@@ -281,10 +357,8 @@ namespace ConsoleUI
                 userMotorcycle.SetMotorcycleProperties(vehicleModelName, vehicleWheelManufacturerName, vehicleWheelAirPressure,
                     motorcycleLicenseType, engineVolume, vehicleCurrentEnergy);
             }
-            else
+            else if (userVehicleInseration is Truck userTruck)
             {
-                Truck userTruck = (Truck)userVehicleInseration;
-
                 Console.WriteLine("\nPlease enter 'Y' if the truck contain dangerous materials and 'N' if not:");
                 bool containDangerousMaterials = InputGetter.GetBoolPropertyFromUser();
 
@@ -294,10 +368,18 @@ namespace ConsoleUI
                 userTruck.SetTruckProperties(vehicleModelName, vehicleWheelManufacturerName, vehicleWheelAirPressure,
                     containDangerousMaterials, cargoTankVolume, vehicleCurrentEnergy);
             }
+            else
+            {
+                throw new ArgumentException($"Unrecognized vehicle type: {userVehicleInseration.GetType().Name}");
+            }
 
             return userVehicleInseration;
         }
 
+        /// <summary>
+        /// Prompts for owner information and creates a garage ticket for the vehicle.
+        /// </summary>
+        /// <returns>A garage ticket with owner name and phone number.</returns>
         private static GarageTicket generateGarageTicket()
         {
             MassageSender.SendOwnerVehicleInfoMessage();

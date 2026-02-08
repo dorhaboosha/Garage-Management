@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GarageLogic
 {
+    /// <summary>
+    /// Maximum air pressure (in PSI) for each vehicle type's wheels.
+    /// </summary>
     public enum eWheelMaxAirPressure
     {
         MotorcycleWheel = 33,
@@ -13,6 +16,9 @@ namespace GarageLogic
         TruckWheel = 28
     }
 
+    /// <summary>
+    /// Available fuel types for fuel-powered vehicles.
+    /// </summary>
     public enum eFuelType
     {
         Soler = 1,
@@ -21,6 +27,9 @@ namespace GarageLogic
         Octan98 = 4
     }
 
+    /// <summary>
+    /// Number of wheels for each vehicle type.
+    /// </summary>
     public enum eNumberOfWheelsInVehicle
     {
         MotorcycleNumberWheels = 2,
@@ -28,6 +37,9 @@ namespace GarageLogic
         TruckNumberWheels = 12,
     }
 
+    /// <summary>
+    /// Motorcycle license types.
+    /// </summary>
     public enum eMotorcycleLicenseType 
     {
        A = 1,
@@ -36,6 +48,9 @@ namespace GarageLogic
        B1 = 4
     }
 
+    /// <summary>
+    /// Available car colors.
+    /// </summary>
     public enum eCarColor 
     {
         Yellow = 1,
@@ -44,6 +59,9 @@ namespace GarageLogic
         Red = 4
     }
 
+    /// <summary>
+    /// Number of doors for a car.
+    /// </summary>
     public enum eCarNumberOfDoors
     {
         TwoDoors = 2,
@@ -52,6 +70,9 @@ namespace GarageLogic
         FiveDoors = 5,
     }
 
+    /// <summary>
+    /// Status of a vehicle in the garage.
+    /// </summary>
     public enum eVehicleStatusInGarage
     {
         InRepair = 1,
@@ -59,6 +80,9 @@ namespace GarageLogic
         PayedFor = 3
     }
 
+    /// <summary>
+    /// Types of vehicles supported by the garage.
+    /// </summary>
     public enum eVehicleType
     {
         RegularCar = 1,
@@ -68,6 +92,9 @@ namespace GarageLogic
         Truck = 5
     }
 
+    /// <summary>
+    /// Main menu options for the garage management system.
+    /// </summary>
     public enum eGarageMenuOperationOption
     {
         ExitProgram = 0,

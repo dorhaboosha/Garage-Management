@@ -1,4 +1,4 @@
-﻿using GarageLogic;
+using GarageLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace ConsoleUI
 {
+    /// <summary>
+    /// Handles console input validation and retrieval for the garage management UI.
+    /// Prompts the user for input and validates it before returning, reprompting on invalid input.
+    /// </summary>
     internal static class InputGetter
     {
+        /// <summary>
+        /// Validates that the user's menu option is a single digit between 0 and 7.
+        /// </summary>
         private static bool optionValidation(StringBuilder i_UserOption)
         {
             bool validOption = true;
@@ -33,6 +40,10 @@ namespace ConsoleUI
             return validOption;
         }
 
+        /// <summary>
+        /// Reads and validates the user's choice from the main garage menu (0-7).
+        /// </summary>
+        /// <returns>The selected menu operation option.</returns>
         internal static eGarageMenuOperationOption GetUserOptionToOperate()
         {
             StringBuilder userOption = new StringBuilder(Console.ReadLine());
@@ -75,6 +86,10 @@ namespace ConsoleUI
             return validVehicleTypeOption;
         }
 
+        /// <summary>
+        /// Reads and validates the user's vehicle type selection (1-5).
+        /// </summary>
+        /// <returns>The selected vehicle type.</returns>
         internal static eVehicleType GetUserOptionToVehicle()
         {
             StringBuilder userVehicleType = new StringBuilder(Console.ReadLine());
@@ -118,6 +133,10 @@ namespace ConsoleUI
             return validStringProperty;
         }
 
+        /// <summary>
+        /// Reads a string property from the user. Accepts only letters, digits, and punctuation.
+        /// </summary>
+        /// <returns>The validated string input.</returns>
         internal static string GetStringPropertyFromUser()
         {
             StringBuilder stringProperty = new StringBuilder(Console.ReadLine());
@@ -149,6 +168,10 @@ namespace ConsoleUI
             return validFloatProperty;
         }
 
+        /// <summary>
+        /// Reads a positive float value from the user.
+        /// </summary>
+        /// <returns>The validated float value.</returns>
         internal static float GetFloatPropertyFromUser()
         {
             StringBuilder floatProperty = new StringBuilder(Console.ReadLine());
@@ -190,6 +213,10 @@ namespace ConsoleUI
             return validCarColor;
         }
 
+        /// <summary>
+        /// Reads and validates the user's car color selection (1-4).
+        /// </summary>
+        /// <returns>The selected car color.</returns>
         internal static eCarColor GetUserCarColor()
         {
             StringBuilder carColor = new StringBuilder(Console.ReadLine());
@@ -232,13 +259,17 @@ namespace ConsoleUI
             return validCarNumberDoors;
         }
 
+        /// <summary>
+        /// Reads and validates the user's car door count selection (2-5 doors).
+        /// </summary>
+        /// <returns>The selected number of doors.</returns>
         internal static eCarNumberOfDoors GetUserCarNumberDoors()
         {
             StringBuilder carNumberDoorsString = new StringBuilder(Console.ReadLine());
 
             while (!carNumberDoorsValidation(carNumberDoorsString))
             {
-                Console.WriteLine("What you insert is not valid, please chose valid car number of doors option (number between 2 - 4):");
+                Console.WriteLine("What you insert is not valid, please choose a valid option (number between 1 - 4):");
                 carNumberDoorsString.Clear();
                 carNumberDoorsString.Append(Console.ReadLine());
             }
@@ -274,6 +305,10 @@ namespace ConsoleUI
             return validMotorcycleLicenseType;
         }
 
+        /// <summary>
+        /// Reads and validates the user's motorcycle license type (1-4).
+        /// </summary>
+        /// <returns>The selected motorcycle license type.</returns>
         internal static eMotorcycleLicenseType GetUserMotorcycleLicenseType()
         {
             StringBuilder motorcycleLicenseTypeString = new StringBuilder(Console.ReadLine());
@@ -308,6 +343,10 @@ namespace ConsoleUI
             return validIntProperty;
         }
 
+        /// <summary>
+        /// Reads a positive integer value from the user.
+        /// </summary>
+        /// <returns>The validated integer value.</returns>
         internal static int GetIntPropertyFromUser()
         {
             StringBuilder intProperty = new StringBuilder(Console.ReadLine());
@@ -349,6 +388,10 @@ namespace ConsoleUI
             return validBoolProperty;
         }
 
+        /// <summary>
+        /// Reads a boolean from the user. Accepts 'Y' for true or 'N' for false.
+        /// </summary>
+        /// <returns>True if user entered 'Y', false if user entered 'N'.</returns>
         internal static bool GetBoolPropertyFromUser()
         {
             StringBuilder boolProperty = new StringBuilder(Console.ReadLine());
@@ -389,6 +432,10 @@ namespace ConsoleUI
             return validOwnerName;
         }
 
+        /// <summary>
+        /// Reads the vehicle owner's name from the user. Accepts only letters.
+        /// </summary>
+        /// <returns>The validated owner name.</returns>
         internal static string GetOwnerNameFromUser()
         {
             StringBuilder ownerName = new StringBuilder(Console.ReadLine());
@@ -427,6 +474,10 @@ namespace ConsoleUI
             return validOwnerPhoneNumber;
         }
 
+        /// <summary>
+        /// Reads the vehicle owner's phone number from the user. Accepts only digits.
+        /// </summary>
+        /// <returns>The validated phone number.</returns>
         internal static string GetOwnerPhoneNumberFromUser()
         {
             StringBuilder ownerPhoneNumber = new StringBuilder(Console.ReadLine());
@@ -465,6 +516,10 @@ namespace ConsoleUI
             return validDisplyFilter;
         }
 
+        /// <summary>
+        /// Reads the user's display filter for vehicle list (0-3). 0 = all vehicles; 1-3 = filter by status.
+        /// </summary>
+        /// <returns>The selected filter option.</returns>
         internal static int GetUserDisplyFilter()
         {
             StringBuilder displyFilterOption = new StringBuilder(Console.ReadLine());
@@ -506,6 +561,10 @@ namespace ConsoleUI
             return validNewVehicleStatus;
         }
 
+        /// <summary>
+        /// Reads and validates the new vehicle status from the user (1-3).
+        /// </summary>
+        /// <returns>The selected vehicle status in garage.</returns>
         internal static eVehicleStatusInGarage GetNewVehicleStatusFromUser()
         {
             StringBuilder newVehicleStatus = new StringBuilder(Console.ReadLine());
@@ -548,6 +607,10 @@ namespace ConsoleUI
             return validVehicleFuelType;
         }
 
+        /// <summary>
+        /// Reads and validates the user's fuel type selection (1-4).
+        /// </summary>
+        /// <returns>The selected fuel type.</returns>
         internal static eFuelType GetUserVehicleFuelType()
         {
             StringBuilder vehicleFuelTypeString = new StringBuilder(Console.ReadLine());
