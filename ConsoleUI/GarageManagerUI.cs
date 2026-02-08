@@ -239,18 +239,15 @@ namespace ConsoleUI
 
             catch (ArgumentException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (InvalidOperationException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
             catch (ValueOutOfRangeException exception)
             {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
+                handleOperationError(exception);
             }
         }
 
