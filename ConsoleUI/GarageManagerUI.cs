@@ -89,7 +89,17 @@ namespace ConsoleUI
                 }
             }
 
-            catch (Exception exception) 
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (ValueOutOfRangeException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -106,40 +116,50 @@ namespace ConsoleUI
 
             try
             {
+                IEnumerable<RegisteredVehicle> vehicles;
                 if (userChoice == 0)
                 {
-                    IReadOnlyList<RegisteredVehicle> vehiclesinGarage = sr_GarageManager.VehiclesInGarage;
-                    int numberOfVehicle = 1;
-                    Console.WriteLine();
-                    
-                    foreach (RegisteredVehicle registeredVehicle in vehiclesinGarage)
-                    {
-                        Console.WriteLine("{0}. {1}", numberOfVehicle, registeredVehicle.Vehicle.LicenseNumber);
-                        numberOfVehicle++;
-                    }
-
-                    Console.WriteLine();
+                    vehicles = sr_GarageManager.VehiclesInGarage;
                 }
                 else
                 {
                     eVehicleStatusInGarage statusFilter = (eVehicleStatusInGarage)userChoice;
-                    List<RegisteredVehicle> vehiclesinGarageByStatus = sr_GarageManager.GetVehiclesByStatus(statusFilter);
-                    int numberOfVehicle = 1;
-                    Console.WriteLine();
-
-                    foreach (RegisteredVehicle registeredVehicle in vehiclesinGarageByStatus)
-                    {
-                        Console.WriteLine("{0}. {1}", numberOfVehicle, registeredVehicle.Vehicle.LicenseNumber);
-                        numberOfVehicle++;
-                    }
-
-                    Console.WriteLine();
+                    vehicles = sr_GarageManager.GetVehiclesByStatus(statusFilter);
                 }
+
+                Console.WriteLine();
+                if (userChoice == 0 && !vehicles.Any())
+                {
+                    Console.WriteLine("There are no vehicles in the garage to show.");
+                }
+                else
+                {
+                    displayLicenseNumbers(vehicles);
+                }
+                Console.WriteLine();
             }
-            catch (Exception exception) 
+            catch (ArgumentException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+        }
+
+        /// <summary>
+        /// Displays license numbers for a collection of registered vehicles.
+        /// </summary>
+        private static void displayLicenseNumbers(IEnumerable<RegisteredVehicle> vehicles)
+        {
+            int numberOfVehicle = 1;
+            foreach (RegisteredVehicle registeredVehicle in vehicles)
+            {
+                Console.WriteLine("{0}. {1}", numberOfVehicle, registeredVehicle.Vehicle.LicenseNumber);
+                numberOfVehicle++;
             }
         }
 
@@ -159,7 +179,12 @@ namespace ConsoleUI
                 MassageSender.SendSuccessChangeVehicleStatusMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -180,7 +205,17 @@ namespace ConsoleUI
                 MassageSender.SendSuccessInflateVehicleWheelsMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (ValueOutOfRangeException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -205,7 +240,17 @@ namespace ConsoleUI
                 MassageSender.SendSuccessRefuelingVehicleMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (ValueOutOfRangeException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -228,7 +273,12 @@ namespace ConsoleUI
                 MassageSender.SendSuccessRechargingVehicleMessage();
             }
 
-            catch (Exception exception)
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -250,7 +300,12 @@ namespace ConsoleUI
                 Console.WriteLine(printProperties);
             }
 
-            catch (Exception exception) 
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (InvalidOperationException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -275,21 +330,14 @@ namespace ConsoleUI
             Console.WriteLine("\nPlease write the wheel manufacturer name of the vehicle:");
             string vehicleWheelManufacturerName = InputGetter.GetStringPropertyFromUser();
             
-            Console.WriteLine("\nPlease write the air prussure in the wheels of the vehicle:");
+            Console.WriteLine("\nPlease write the air pressure in the wheels of the vehicle:");
             float vehicleWheelAirPressure = InputGetter.GetFloatPropertyFromUser();
 
-            float vehicleCurrentEnergy;
-
-            if (userVehicleInseration.Engine is FuelEngine)
-            {
-                Console.WriteLine("\nPlease write the current amount of fuel in vehicle:");
-                vehicleCurrentEnergy = InputGetter.GetFloatPropertyFromUser();
-            }
-            else 
-            {
-                Console.WriteLine("\nPlease write the current amount of battery in vehicle:");
-                vehicleCurrentEnergy = InputGetter.GetFloatPropertyFromUser();
-            }
+            string energyPrompt = userVehicleInseration.Engine is FuelEngine
+                ? "\nPlease write the current amount of fuel in vehicle:"
+                : "\nPlease write the current amount of battery in vehicle:";
+            Console.WriteLine(energyPrompt);
+            float vehicleCurrentEnergy = InputGetter.GetFloatPropertyFromUser();
 
             if (userVehicleInseration is Car userCar)
             {
@@ -315,10 +363,8 @@ namespace ConsoleUI
                 userMotorcycle.SetMotorcycleProperties(vehicleModelName, vehicleWheelManufacturerName, vehicleWheelAirPressure,
                     motorcycleLicenseType, engineVolume, vehicleCurrentEnergy);
             }
-            else
+            else if (userVehicleInseration is Truck userTruck)
             {
-                Truck userTruck = (Truck)userVehicleInseration;
-
                 Console.WriteLine("\nPlease enter 'Y' if the truck contain dangerous materials and 'N' if not:");
                 bool containDangerousMaterials = InputGetter.GetBoolPropertyFromUser();
 
@@ -327,6 +373,10 @@ namespace ConsoleUI
 
                 userTruck.SetTruckProperties(vehicleModelName, vehicleWheelManufacturerName, vehicleWheelAirPressure,
                     containDangerousMaterials, cargoTankVolume, vehicleCurrentEnergy);
+            }
+            else
+            {
+                throw new ArgumentException($"Unrecognized vehicle type: {userVehicleInseration.GetType().Name}");
             }
 
             return userVehicleInseration;

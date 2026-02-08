@@ -25,20 +25,21 @@ namespace GarageLogic
         /// <summary>
         /// Gets a read-only view of all registered vehicles in the garage.
         /// </summary>
-        /// <exception cref="InvalidOperationException">Thrown when the garage is empty.</exception>
         public IReadOnlyList<RegisteredVehicle> VehiclesInGarage
         {
             get
             {
-                if (r_RegisteredVehicles.Count == 0)
-                {
-                    throw new InvalidOperationException("There are no vehicles in the garage to show.");
-                }
-                else
-                {
-                    return r_RegisteredVehicles.AsReadOnly();
-                }
+                return r_RegisteredVehicles.AsReadOnly();
             }
+        }
+
+        /// <summary>
+        /// Finds a registered vehicle by license number, or null if not found.
+        /// </summary>
+        private RegisteredVehicle FindVehicleByLicense(string i_LicenseNumber)
+        {
+            return r_RegisteredVehicles.FirstOrDefault(
+                rv => rv.Vehicle.LicenseNumber == i_LicenseNumber);
         }
 
         /// <summary>
@@ -48,18 +49,7 @@ namespace GarageLogic
         /// <returns>True if the vehicle is in the garage; otherwise false.</returns>
         public bool ContainVehicle(string i_LicenseNumber)
         {
-            bool vehicleInGarage = false;
-
-            foreach (RegisteredVehicle registeredVehicle in r_RegisteredVehicles)
-            {
-                if (registeredVehicle.Vehicle.LicenseNumber == i_LicenseNumber)
-                {
-                    vehicleInGarage = true;
-                    break;
-                }
-            }
-
-            return vehicleInGarage;
+            return FindVehicleByLicense(i_LicenseNumber) != null;
         }
 
         /// <summary>
@@ -70,16 +60,7 @@ namespace GarageLogic
         /// <exception cref="ArgumentException">Thrown when no vehicle with the given license exists.</exception>
         public RegisteredVehicle GetVehicleByLicenseNumber(string i_LicenseNumber)
         {
-            RegisteredVehicle vehicle = null;
-            
-            foreach(RegisteredVehicle registeredVehicle in r_RegisteredVehicles)
-            {
-                if(registeredVehicle.Vehicle.LicenseNumber == i_LicenseNumber) 
-                {
-                    vehicle = registeredVehicle;
-                    break;
-                }
-            }
+            RegisteredVehicle vehicle = FindVehicleByLicense(i_LicenseNumber);
 
             if (vehicle == null)
             {
@@ -94,9 +75,9 @@ namespace GarageLogic
         /// Gets all vehicles that have the specified status.
         /// </summary>
         /// <param name="i_VehicleStatus">The status to filter by.</param>
-        /// <returns>List of vehicles with the given status.</returns>
+        /// <returns>Read-only list of vehicles with the given status.</returns>
         /// <exception cref="InvalidOperationException">Thrown when no vehicles exist with the specified status.</exception>
-        public List<RegisteredVehicle> GetVehiclesByStatus(eVehicleStatusInGarage i_VehicleStatus)
+        public IReadOnlyList<RegisteredVehicle> GetVehiclesByStatus(eVehicleStatusInGarage i_VehicleStatus)
         {
             List<RegisteredVehicle> vehiclesInSameStatus = new List<RegisteredVehicle>();
 
@@ -182,18 +163,18 @@ namespace GarageLogic
         /// </summary>
         /// <param name="i_LicenseNumber">The license plate number.</param>
         /// <param name="i_AmountToCharge">Amount of charge to add (in minutes).</param>
-        /// <exception cref="FormatException">Thrown when the vehicle has a fuel engine.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the vehicle has a fuel engine.</exception>
         public void Recharge(string i_LicenseNumber, float i_AmountToCharge)
         {
             Vehicle vehicleToCharge = GetVehicleByLicenseNumber(i_LicenseNumber).Vehicle;
-            
-            if(vehicleToCharge.Engine is ElectricEngine electricEngine)
+
+            if (vehicleToCharge.Engine is ElectricEngine electricEngine)
             {
-                filingEnergy(vehicleToCharge, electricEngine, i_AmountToCharge);
+                fillingEnergy(vehicleToCharge, electricEngine, i_AmountToCharge);
             }
             else
             {
-                throw new FormatException("The vehicle has fuel engine so we cannot recharge this vehicle," +
+                throw new InvalidOperationException("The vehicle has fuel engine so we cannot recharge this vehicle," +
                     " therefore the operation you tried to do canceled.");
             }
         }
@@ -205,16 +186,16 @@ namespace GarageLogic
         /// <param name="i_AmountToRefuel">Amount of fuel to add.</param>
         /// <param name="i_FuelType">The type of fuel (must match the vehicle's engine).</param>
         /// <exception cref="ArgumentException">Thrown when the fuel type does not match the vehicle.</exception>
-        /// <exception cref="FormatException">Thrown when the vehicle has an electric engine.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when the vehicle has an electric engine.</exception>
         public void Refueling(string i_LicenseNumber, float i_AmountToRefuel, eFuelType i_FuelType)
         {
             Vehicle vehicleToRefuel = GetVehicleByLicenseNumber(i_LicenseNumber).Vehicle;
-            
+
             if (vehicleToRefuel.Engine is FuelEngine fuelEngine)
             {
                 if (fuelEngine.FuelTypeEnum == i_FuelType)
                 {
-                    filingEnergy(vehicleToRefuel, fuelEngine, i_AmountToRefuel);
+                    fillingEnergy(vehicleToRefuel, fuelEngine, i_AmountToRefuel);
                 }
                 else
                 {
@@ -224,7 +205,7 @@ namespace GarageLogic
             }
             else
             {
-                throw new FormatException("The vehicle has electric engine so we cannot refuel this vehicle," + 
+                throw new InvalidOperationException("The vehicle has electric engine so we cannot refuel this vehicle," +
                     " therefore the operation you tried to do canceled.");
             }
         }
@@ -234,11 +215,11 @@ namespace GarageLogic
         /// </summary>
         /// <param name="i_Vehicle">The vehicle to fill.</param>
         /// <param name="i_Engine">The vehicle's engine.</param>
-        /// <param name="i_AmountOfFilingEnergy">The amount of energy to add.</param>
-        private void filingEnergy(Vehicle i_Vehicle, Engine i_Engine, float i_AmountOfFilingEnergy)
+        /// <param name="i_AmountOfFillingEnergy">The amount of energy to add.</param>
+        private void fillingEnergy(Vehicle i_Vehicle, Engine i_Engine, float i_AmountOfFillingEnergy)
         {
-            i_Engine.FillingEnergyInEngine(i_AmountOfFilingEnergy);
-            i_Vehicle.UpdatingEnergyPrecentage();
+            i_Engine.FillingEnergyInEngine(i_AmountOfFillingEnergy);
+            i_Vehicle.UpdatingEnergyPercentage();
         }
     }
 }

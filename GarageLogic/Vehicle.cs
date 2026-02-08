@@ -52,15 +52,15 @@ namespace GarageLogic
         /// Sets the vehicle's common properties: model name, wheel details, and current energy level.
         /// </summary>
         /// <param name="i_ModelName">The model name of the vehicle.</param>
-        /// <param name="i_WheelManufacrurerName">The manufacturer of the wheels.</param>
+        /// <param name="i_WheelManufacturerName">The manufacturer of the wheels.</param>
         /// <param name="i_WheelCurrentAirPressure">The current air pressure in the wheels.</param>
         /// <param name="i_CurrentAmountEnergy">The current fuel or battery level.</param>
-        internal void SetVehicleProperties(string i_ModelName, string i_WheelManufacrurerName, 
+        internal void SetVehicleProperties(string i_ModelName, string i_WheelManufacturerName, 
             float i_WheelCurrentAirPressure, float i_CurrentAmountEnergy)
         {
             m_ModelName = i_ModelName;
             setEngineCurrentAmountOfEnergy(i_CurrentAmountEnergy);
-            setWheelProperties(i_WheelManufacrurerName, i_WheelCurrentAirPressure);
+            setWheelProperties(i_WheelManufacturerName, i_WheelCurrentAirPressure);
         }
 
         /// <summary>
@@ -70,19 +70,19 @@ namespace GarageLogic
         private void setEngineCurrentAmountOfEnergy(float i_CurrentAmountEnergy)
         {
             Engine.CurrentEngineAmount = i_CurrentAmountEnergy;
-            UpdatingEnergyPrecentage();
+            UpdatingEnergyPercentage();
         }
 
         /// <summary>
         /// Sets the manufacturer and air pressure for all wheels.
         /// </summary>
-        /// <param name="i_WheelManufacrurerName">The wheel manufacturer name.</param>
+        /// <param name="i_WheelManufacturerName">The wheel manufacturer name.</param>
         /// <param name="i_WheelCurrentAirPressure">The current air pressure to set.</param>
-        private void setWheelProperties(string i_WheelManufacrurerName, float i_WheelCurrentAirPressure)
+        private void setWheelProperties(string i_WheelManufacturerName, float i_WheelCurrentAirPressure)
         {
             foreach (Wheel wheel in Wheels)
             {
-                wheel.SetWheelProperties(i_WheelManufacrurerName, i_WheelCurrentAirPressure);
+                wheel.SetWheelProperties(i_WheelManufacturerName, i_WheelCurrentAirPressure);
             }
         }
 
@@ -133,7 +133,7 @@ namespace GarageLogic
         /// <summary>
         /// Recalculates the remaining energy percentage based on current vs. max engine capacity.
         /// </summary>
-        internal void UpdatingEnergyPrecentage()
+        internal void UpdatingEnergyPercentage()
         {
             m_RemainingEnergyPercentage = r_engine.MaxEngineAmount > 0
                 ? (r_engine.CurrentEngineAmount / r_engine.MaxEngineAmount) * 100
