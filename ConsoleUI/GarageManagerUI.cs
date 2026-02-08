@@ -128,9 +128,11 @@ namespace ConsoleUI
                 }
 
                 Console.WriteLine();
-                if (userChoice == 0 && !vehicles.Any())
+                if (!vehicles.Any())
                 {
-                    Console.WriteLine("There are no vehicles in the garage to show.");
+                    Console.WriteLine(userChoice == 0
+                        ? "There are no vehicles in the garage to show."
+                        : "There are no vehicles in the garage with this status.");
                 }
                 else
                 {
@@ -139,11 +141,6 @@ namespace ConsoleUI
                 Console.WriteLine();
             }
             catch (ArgumentException exception)
-            {
-                Console.WriteLine(string.Format("\n{0}", exception.Message));
-                Console.WriteLine("We move you now to the main menu.\n");
-            }
-            catch (InvalidOperationException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");
@@ -279,6 +276,11 @@ namespace ConsoleUI
                 Console.WriteLine("We move you now to the main menu.\n");
             }
             catch (InvalidOperationException exception)
+            {
+                Console.WriteLine(string.Format("\n{0}", exception.Message));
+                Console.WriteLine("We move you now to the main menu.\n");
+            }
+            catch (ValueOutOfRangeException exception)
             {
                 Console.WriteLine(string.Format("\n{0}", exception.Message));
                 Console.WriteLine("We move you now to the main menu.\n");

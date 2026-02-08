@@ -75,26 +75,13 @@ namespace GarageLogic
         /// Gets all vehicles that have the specified status.
         /// </summary>
         /// <param name="i_VehicleStatus">The status to filter by.</param>
-        /// <returns>Read-only list of vehicles with the given status.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when no vehicles exist with the specified status.</exception>
+        /// <returns>Read-only list of vehicles with the given status. Returns empty list when no vehicles match.</returns>
         public IReadOnlyList<RegisteredVehicle> GetVehiclesByStatus(eVehicleStatusInGarage i_VehicleStatus)
         {
-            List<RegisteredVehicle> vehiclesInSameStatus = new List<RegisteredVehicle>();
-
-            foreach (RegisteredVehicle registeredVehicle in r_RegisteredVehicles)
-            {
-                if (registeredVehicle.GarageTicketInfo.VehicleStatus == i_VehicleStatus)
-                {
-                    vehiclesInSameStatus.Add(registeredVehicle);
-                }
-            }
-
-            if (vehiclesInSameStatus.Count == 0)
-            {
-                throw new InvalidOperationException("There are no vehicles in the garage with this status.");
-            }
-
-            return vehiclesInSameStatus;
+            return r_RegisteredVehicles
+                .Where(rv => rv.GarageTicketInfo.VehicleStatus == i_VehicleStatus)
+                .ToList()
+                .AsReadOnly();
         }
 
         /// <summary>
@@ -168,9 +155,9 @@ namespace GarageLogic
         {
             Vehicle vehicleToCharge = GetVehicleByLicenseNumber(i_LicenseNumber).Vehicle;
 
-            if (vehicleToCharge.Engine is ElectricEngine electricEngine)
+            if (vehicleToCharge.Engine is ElectricEngine)
             {
-                fillingEnergy(vehicleToCharge, electricEngine, i_AmountToCharge);
+                fillingEnergy(vehicleToCharge, i_AmountToCharge);
             }
             else
             {
@@ -195,7 +182,7 @@ namespace GarageLogic
             {
                 if (fuelEngine.FuelTypeEnum == i_FuelType)
                 {
-                    fillingEnergy(vehicleToRefuel, fuelEngine, i_AmountToRefuel);
+                    fillingEnergy(vehicleToRefuel, i_AmountToRefuel);
                 }
                 else
                 {
@@ -214,11 +201,10 @@ namespace GarageLogic
         /// Fills the vehicle's engine with energy and updates the energy percentage display.
         /// </summary>
         /// <param name="i_Vehicle">The vehicle to fill.</param>
-        /// <param name="i_Engine">The vehicle's engine.</param>
         /// <param name="i_AmountOfFillingEnergy">The amount of energy to add.</param>
-        private void fillingEnergy(Vehicle i_Vehicle, Engine i_Engine, float i_AmountOfFillingEnergy)
+        private void fillingEnergy(Vehicle i_Vehicle, float i_AmountOfFillingEnergy)
         {
-            i_Engine.FillingEnergyInEngine(i_AmountOfFillingEnergy);
+            i_Vehicle.Engine.FillingEnergyInEngine(i_AmountOfFillingEnergy);
             i_Vehicle.UpdatingEnergyPercentage();
         }
     }

@@ -25,7 +25,8 @@ namespace GarageLogic
         /// <param name="i_Engine">The engine (fuel or electric) for the vehicle.</param>
         /// <param name="i_Wheels">The wheels array for the vehicle.</param>
         /// <exception cref="FormatException">Thrown when the license number is null or empty.</exception>
-        /// <exception cref="ArgumentNullException">Thrown when engine or wheels is null or empty.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when engine or wheels is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when wheels array is empty.</exception>
         public Vehicle(string i_LicenseNumber, Engine i_Engine, Wheel[] i_Wheels)
         {
             if (string.IsNullOrEmpty(i_LicenseNumber))
@@ -38,9 +39,14 @@ namespace GarageLogic
                 throw new ArgumentNullException(nameof(i_Engine), "Engine cannot be null");
             }
 
-            if (i_Wheels == null || i_Wheels.Length == 0)
+            if (i_Wheels == null)
             {
-                throw new ArgumentNullException(nameof(i_Wheels), "Wheels cannot be null or empty");
+                throw new ArgumentNullException(nameof(i_Wheels), "Wheels cannot be null");
+            }
+
+            if (i_Wheels.Length == 0)
+            {
+                throw new ArgumentException("Wheels array cannot be empty", nameof(i_Wheels));
             }
 
             r_LicenseNumber = i_LicenseNumber;
@@ -157,16 +163,17 @@ namespace GarageLogic
         /// <returns>Formatted vehicle information.</returns>
         public override string ToString()
         {
-            string vehicleInfo = string.Format("Vehicle's information -\n" +
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Vehicle's information -\n" +
                 "Model Name : {0} | License Plate Number : {1} | Remaining energy in engine percentage : {2}%\n{3}",
-                modelName, LicenseNumber, m_RemainingEnergyPercentage, Engine.ToString());
-            
-            foreach (Wheel wheel in Wheels) 
+                modelName, LicenseNumber, m_RemainingEnergyPercentage, Engine);
+
+            foreach (Wheel wheel in Wheels)
             {
-                vehicleInfo += string.Format("\n{0}", wheel.ToString());
+                sb.AppendFormat("\n{0}", wheel);
             }
 
-            return vehicleInfo;
+            return sb.ToString();
         }
     }
 }
