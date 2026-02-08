@@ -64,12 +64,12 @@ namespace GarageLogic
         }
 
         /// <summary>
-        /// Sets the engine's current energy level and updates the energy percentage.
+        /// Sets the engine's current energy level (absolute value) and updates the energy percentage.
         /// </summary>
         /// <param name="i_CurrentAmountEnergy">The current fuel or battery level to set.</param>
         private void setEngineCurrentAmountOfEnergy(float i_CurrentAmountEnergy)
         {
-            Engine.FillingEnergyInEngine(i_CurrentAmountEnergy);
+            Engine.CurrentEngineAmount = i_CurrentAmountEnergy;
             UpdatingEnergyPrecentage();
         }
 

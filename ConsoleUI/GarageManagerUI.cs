@@ -108,7 +108,7 @@ namespace ConsoleUI
             {
                 if (userChoice == 0)
                 {
-                    List<RegisteredVehicle> vehiclesinGarage = sr_GarageManager.VehiclesInGarage;
+                    IReadOnlyList<RegisteredVehicle> vehiclesinGarage = sr_GarageManager.VehiclesInGarage;
                     int numberOfVehicle = 1;
                     Console.WriteLine();
                     

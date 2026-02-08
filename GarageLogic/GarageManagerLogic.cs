@@ -23,10 +23,10 @@ namespace GarageLogic
         }
 
         /// <summary>
-        /// Gets the list of all registered vehicles in the garage.
+        /// Gets a read-only view of all registered vehicles in the garage.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown when the garage is empty.</exception>
-        public List<RegisteredVehicle> VehiclesInGarage
+        public IReadOnlyList<RegisteredVehicle> VehiclesInGarage
         {
             get
             {
@@ -36,7 +36,7 @@ namespace GarageLogic
                 }
                 else
                 {
-                    return r_RegisteredVehicles;
+                    return r_RegisteredVehicles.AsReadOnly();
                 }
             }
         }
@@ -141,10 +141,16 @@ namespace GarageLogic
         /// </summary>
         /// <param name="i_Vehicle">The vehicle to register.</param>
         /// <param name="i_GarageTicket">The garage ticket with owner and status information.</param>
+        /// <exception cref="ArgumentException">Thrown when a vehicle with the same license number already exists.</exception>
         public void RegisterVehicleInGarage(Vehicle i_Vehicle, GarageTicket i_GarageTicket)
         {
+            if (ContainVehicle(i_Vehicle.LicenseNumber))
+            {
+                throw new ArgumentException("There is a vehicle with the same license number in the system," +
+                    " please check the license number again, therefore the operation you tried to do canceled.");
+            }
+
             RegisteredVehicle registeredVehicle = new RegisteredVehicle(i_Vehicle, i_GarageTicket);
-            
             r_RegisteredVehicles.Add(registeredVehicle);
         }
 
